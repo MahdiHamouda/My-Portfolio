@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Mahdi Hamouda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow: hidden;
+  background: #0e0e0e;
+}
+
+/* BACKGROUND IMAGE WITH BLUR */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('images/bg.jpg') no-repeat center center/cover;
+  filter: blur(10px) brightness(45%);
+  z-index: 0;
+}
+
+/* SPINNER (LOADING) */
+.spinner-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: #0e0e0e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.spinner {
+  border: 6px solid rgba(255, 123, 63, 0.2);
+  border-top: 6px solid #ff7b3f;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* TOP BUTTONS */
+.back-btn, .work-btn {
+  position: fixed;
+  top: 30px;
+  padding: 16px 28px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: 3px solid #ff7b3f;
+  border-radius: 16px;
+  background: transparent;
+  color: #ffb75e;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255,123,63,0.5);
+  transition: all 0.3s ease;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeTopBtns 1s ease forwards 2s;
+}
+.back-btn:hover, .work-btn:hover {
+  transform: scale(1.08);
+  background: linear-gradient(90deg, #ff7b3f, #ffb75e);
+  color: #0f0f0f;
+  box-shadow: 0 0 45px rgba(255,183,94,0.8);
+}
+.back-btn { left: 30px; }
+.work-btn { right: 30px; }
+
+@keyframes fadeTopBtns {
+  to { opacity: 1; }
+}
+
+/* WRAPPER */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards 1.5s;
+}
+
+/* INNER CONTAINER */
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 4rem;
+  max-width: 720px;
+  background: rgba(20, 20, 20, 0.65);
+  border-radius: 18px;
+  box-shadow: 0 0 35px rgba(255, 123, 63, 0.3);
+}
+
+/* TITLE & DESCRIPTION */
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-shadow: 0 0 25px #ff7b3f, 0 0 45px #ffb75e;
+  margin-bottom: 18px;
+}
+p {
+  max-width: 600px;
+  font-size: 1.15rem;
+  color: #e5c8a8;
+  margin-bottom: 50px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* CONTACT BUTTONS */
+.contact-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  width: 100%;
+  max-width: 400px;
+  align-self: center;
+}
+.contact-btn {
+  padding: 18px 24px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(90deg, #ff7b3f, #ffb75e);
+  color: #0f0f0f;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(255, 123, 63, 0.8);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-decoration: none;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.contact-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 45px rgba(255, 183, 94, 1);
+}
+.contact-btn i { font-size: 1.7rem; }
+
+/* RECOMMENDED TAG */
+.recommended {
+  font-size: 0.95rem;
+  color: #000000;
+  font-weight: 600;
+  margin-left: 6px;
+  opacity: 0.85;
+}
+
+/* POP UP ANIMATION FOR BUTTONS */
+@keyframes popUp {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.contact-btn:nth-child(1) { animation: popUp 0.8s ease forwards 2.1s; }
+.contact-btn:nth-child(2) { animation: popUp 0.8s ease forwards 2.4s; }
+.contact-btn:nth-child(3) { animation: popUp 0.8s ease forwards 2.7s; }
+.contact-btn:nth-child(4) { animation: popUp 0.8s ease forwards 3s; }
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .container {
+    padding: 2.5rem;
+    width: 90%;
+  }
+  h1 { font-size: 2.4rem; text-align: left; }
+  p { font-size: 1rem; text-align: left; }
+  .contact-btn { font-size: 1.1rem; }
+  .back-btn, .work-btn {
+    top: 15px;
+    padding: 14px 22px;
+    font-size: 1.1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- SPINNER -->
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+</div>
+
+<!-- NAV BUTTONS -->
+<button class="back-btn" onclick="window.location.href='index.html'">Menu</button>
+<button class="work-btn" onclick="window.location.href='portfolio.html'">My Work</button>
+
+<!-- MAIN CONTENT -->
+<div class="wrapper" id="content">
+  <div class="container">
+    <h1>Contact</h1>
+    <p>Let’s connect and bring your vision to life! Whether you need cinematic visuals, dynamic motion graphics, or storytelling edits — I’m always open to new collaborations. Choose your favorite platform below and reach out directly. I respond quickly and love discussing creative projects!</p>
+
+    <div class="contact-buttons">
+      <!-- Discord first (Recommended) -->
+      <a href="https://discord.com/users/1171136785636663336" target="_blank" class="contact-btn">
+        <i class="fab fa-discord"></i> Discord <span class="recommended">(Recommended)</span>
+      </a>
+
+      <a href="https://www.instagram.com/mahdi_hamouda_/" target="_blank" class="contact-btn">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a href="https://x.com/mahdihamouda123" target="_blank" class="contact-btn">
+        <i class="fab fa-x-twitter"></i> X (Twitter)
+      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mahdihammouda744@gmail.com" class="contact-btn">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  const spinner = document.getElementById('spinner');
+  setTimeout(() => {
+    spinner.style.opacity = '0';
+    spinner.style.visibility = 'hidden';
+    document.body.style.overflowY = 'auto';
+  }, 1300); // Spinner duration before fade-out
+});
+</script>
+
+</body>
+</html>

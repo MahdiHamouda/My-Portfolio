@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Project | Mahdi Hamouda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: #0e0e0e;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* BACKGROUND IMAGE */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('images/bg.jpg') no-repeat center center/cover;
+  filter: blur(18px) brightness(40%);
+  z-index: 0;
+}
+
+/* TOP BUTTONS */
+.back-btn, .mywork-btn {
+  position: fixed;
+  top: 40px;
+  z-index: 10;
+  padding: 16px 28px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border: 3px solid #ff7b3f;
+  color: #ffb75e;
+  background: transparent;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,123,63,0.5);
+  transition: all 0.5s ease;
+}
+.back-btn:hover, .mywork-btn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(90deg, #ff7b3f, #ffb75e);
+  color: #0f0f0f;
+  box-shadow: 0 0 40px rgba(255,183,94,0.8);
+}
+.back-btn { left: 40px; }
+.mywork-btn { right: 40px; }
+
+/* HERO */
+.hero {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 55vh;
+  text-align: center;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+}
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0 0 30px #ff7b3f, 0 0 60px #ffb75e;
+  margin-bottom: 20px;
+}
+.hero p {
+  font-size: 1.6rem;
+  color: #e5c8a8;
+  max-width: 800px;
+}
+
+/* FORM SECTION */
+.form-section {
+  position: relative;
+  z-index: 1;
+  padding: 40px 20px 120px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+form {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(255,123,63,0.3);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+form label { font-size: 1.2rem; font-weight: 600; color: #ffb75e; }
+input, textarea {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+input:focus, textarea:focus {
+  box-shadow: 0 0 10px rgba(255,123,63,0.5);
+}
+
+/* CUSTOM DROPDOWN */
+.custom-select {
+  position: relative;
+  user-select: none;
+}
+.custom-select .selected {
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid #ff7b3f;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,123,63,0.5);
+}
+.custom-select .options {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(15,15,15,0.95);
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,123,63,0.5);
+  overflow: hidden;
+  z-index: 5;
+}
+.custom-select .options div {
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.custom-select .options div:hover {
+  background: linear-gradient(90deg, #ff7b3f, #ffb75e);
+  color: #0f0f0f;
+}
+
+/* CHOICE CHIPS (stacked vertically) */
+.choice-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.choice-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.choice-group input[type="radio"], .choice-group input[type="checkbox"] {
+  accent-color: #ff7b3f;
+}
+.choice-group label:hover {
+  background: rgba(255,123,63,0.2);
+}
+
+/* SUBMIT BUTTON */
+button {
+  margin-top: 20px;
+  padding: 14px 30px;
+  font-size: 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #ff7b3f, #ffb75e);
+  border: none;
+  color: #0f0f0f;
+  text-shadow: 0 0 8px #ffb75e;
+  box-shadow: 0 0 15px rgba(255,123,63,0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+button:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,123,63,0.7); }
+
+/* LOADING & THANK YOU */
+#loadingOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+#loadingOverlay.show { opacity: 1; pointer-events: all; }
+#loadingOverlay .spinner { width: 100px; height: 100px; border: 10px solid rgba(255,183,94,0.3); border-top-color: #ffb75e; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#thankYou { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+#thankYou.show { opacity: 1; pointer-events: all; }
+#thankYou h1 { font-size: 4rem; text-align: center; color: #ffb75e; text-shadow: 0 0 20px #ff7b3f, 0 0 40px #ffb75e; animation: pop 0.6s ease forwards; }
+#thankYou p { font-size: 1.8rem; margin-top: 20px; color: #e5c8a8; text-align: center; animation: fadeUp 0.6s ease forwards; animation-delay: 0.3s; opacity: 0; }
+
+@keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes pop { 0% { transform: scale(0) rotate(-45deg); opacity: 0; } 60% { transform: scale(1.2) rotate(15deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+@keyframes fadeUp { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 3rem; }
+  .hero p { font-size: 1.3rem; }
+  form { padding: 25px; }
+  #thankYou h1 { font-size: 3rem; }
+  #thankYou p { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<button class="back-btn" onclick="window.location.href='index.html'">Menu</button>
+<button class="mywork-btn" onclick="window.location.href='portfolio.html'">My Work</button>
+
+<section class="hero">
+  <h1>Start Your Project 🚀</h1>
+  <p>Auto-filled form for testing animations.</p>
+</section>
+
+<section class="form-section">
+  <form id="projectForm" action="https://formspree.io/f/mgvpkbnr" method="POST">
+    <label>Your Name</label>
+    <input name="name" type="text" placeholder="Your full name" required>
+    
+    <label>Your Email</label>
+    <input name="email" type="email" placeholder="you@example.com" required>
+
+    <label>Link to Personal Brand</label>
+    <input name="personalBrand" type="text" placeholder="YouTube, Instagram, TikTok, Facebook">
+
+    <label>Project Type</label>
+    <div class="custom-select">
+      <div class="selected">Select Project Type</div>
+      <div class="options">
+        <div data-value="Motion Graphics">Motion Graphics</div>
+        <div data-value="Gaming Montages">Gaming Montages</div>
+        <div data-value="Documentaries">Documentaries</div>
+        <div data-value="Advertisements">Advertisements</div>
+        <div data-value="Shorts / TikTok">Shorts / TikTok</div>
+        <div data-value="Thumbnails">Thumbnails</div>
+      </div>
+    </div>
+
+    <label>Project Duration</label>
+    <div class="choice-group">
+      <label><input type="radio" name="duration" value="One-time" required> One-time</label>
+      <label><input type="radio" name="duration" value="Long-term"> Long-term</label>
+    </div>
+
+    <label>Project Budget</label>
+    <div class="choice-group">
+      <label><input type="radio" name="budget" value="$50-$200" required> $50-$200</label>
+      <label><input type="radio" name="budget" value="$200-$500"> $200-$500</label>
+      <label><input type="radio" name="budget" value="$500-$1000"> $500-$1000</label>
+      <label><input type="radio" name="budget" value="$1000+"> $1000+</label>
+    </div>
+
+    <label>Raw Footage Link</label>
+    <input name="rawFootage" type="text" placeholder="eg: https://drive.google.com/file/...">
+
+    <label>Reference or Inspiration Link</label>
+    <input name="reference" type="text" placeholder="eg: https://youtu.be/...">
+
+    <label>Project Details</label>
+    <textarea name="details" rows="4" placeholder="Describe what you want me to do in detail"></textarea>
+
+    <label>Deadline or Preferred Date</label>
+    <input name="deadline" type="text" placeholder="eg: Tomorrow at 8pm">
+
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+</section>
+
+<div id="loadingOverlay"><div class="spinner"></div></div>
+<div id="thankYou"><h1>🎉 Thank You!</h1><p>Your project info has been received.</p></div>
+<canvas id="confettiCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1001;"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+const form = document.getElementById('projectForm');
+const submitBtn = document.getElementById('submitBtn');
+const loadingOverlay = document.getElementById('loadingOverlay');
+const thankYou = document.getElementById('thankYou');
+const confettiCanvas = document.getElementById('confettiCanvas');
+
+// Custom select logic
+const customSelect = document.querySelector('.custom-select');
+const selected = customSelect.querySelector('.selected');
+const optionsContainer = customSelect.querySelector('.options');
+selected.addEventListener('click', ()=> optionsContainer.style.display = optionsContainer.style.display === 'flex' ? 'none' : 'flex');
+optionsContainer.querySelectorAll('div').forEach(option=>{
+  option.addEventListener('click', ()=>{
+    selected.textContent = option.getAttribute('data-value');
+    optionsContainer.style.display = 'none';
+  });
+});
+
+// Form submit
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  submitBtn.disabled = true;
+  loadingOverlay.classList.add('show');
+
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    loadingOverlay.classList.remove('show');
+
+    if(response.ok){
+      thankYou.classList.add('show');
+      confetti.create(confettiCanvas, { resize: true })({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+      form.reset();
+      selected.textContent = 'Select Project Type';
+      submitBtn.disabled = false;
+
+      setTimeout(()=>{
+        thankYou.classList.remove('show');
+        window.location.href = 'contact.html';
+      }, 5000);
+    } else {
+      alert('Error submitting form. Please try again.');
+      submitBtn.disabled = false;
+    }
+  } catch (err){
+    loadingOverlay.classList.remove('show');
+    alert('Something went wrong. Please try again later.');
+    submitBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

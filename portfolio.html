@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio | Mahdi Hamouda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; min-height:100%; font-family:'Poppins',sans-serif; color:white; overflow-x:hidden; scroll-behavior:smooth; background:#0e0e0e; }
+body::before { content:""; position:fixed; inset:0; background:url('images/bg.jpg') no-repeat center/cover; filter:blur(18px) brightness(40%); z-index:0; }
+
+/* SPINNER */
+#spinner { position:fixed; inset:0; background:#0e0e0e; display:flex; justify-content:center; align-items:center; z-index:9999; }
+#spinner div { border:5px solid #ff7b3f; border-top:5px solid #ffb75e; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite; }
+@keyframes spin { 0% {transform:rotate(0deg);} 100% {transform:rotate(360deg);} }
+
+/* TOP BUTTONS */
+.back-btn, .work-btn {
+  position:fixed; top:40px; z-index:10; padding:16px 28px; font-size:1.4rem; font-weight:700;
+  border:3px solid #ff7b3f; color:#ffb75e; background:transparent; border-radius:18px; cursor:pointer;
+  box-shadow:0 0 25px rgba(255,123,63,0.7); transition:all 0.6s ease; opacity:0; transform:translateY(-20px);
+}
+.back-btn{ left:40px; } .work-btn{ right:40px; }
+.back-btn:hover, .work-btn:hover { transform:scale(1.2); background:linear-gradient(90deg,#ff7b3f,#ffb75e); color:#0f0f0f; box-shadow:0 0 55px rgba(255,183,94,1),0 0 80px rgba(255,123,63,1); }
+
+/* HERO */
+.hero { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; padding:2rem; opacity:0; transform:translateY(20px); transition:all 0.6s ease; }
+.hero h1 { font-size:4rem; font-weight:700; text-shadow:0 0 30px #ff7b3f,0 0 60px #ffb75e; margin-bottom:30px; }
+.hero p { font-size:1.8rem; color:#e5c8a8; max-width:900px; margin-bottom:50px; }
+
+/* HERO BUTTONS */
+.hero .style-buttons { display:grid; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,auto); gap:30px; max-width:900px; opacity:0; transform:translateY(20px); transition:all 0.6s ease; }
+.hero .style-buttons button {
+  padding:24px 50px; font-size:1.7rem; font-family:'Montserrat',sans-serif; font-weight:700; border-radius:20px;
+  border:3px solid #ff7b3f; background:linear-gradient(90deg,#ff7b3f,#ffb75e); color:#0f0f0f; cursor:pointer;
+  position:relative; overflow:hidden; transition:all 0.4s ease;
+}
+.hero .style-buttons button::before {
+  content:""; position:absolute; inset:0; background:#0e0e0e; transform:scaleX(0); transform-origin:right; transition:transform 0.5s ease; z-index:0;
+}
+.hero .style-buttons button span { position:relative; z-index:1; transition:color 0.5s ease; }
+.hero .style-buttons button:hover::before { transform:scaleX(1); }
+.hero .style-buttons button:hover span { color:#ffb75e; }
+
+/* STYLE SECTIONS */
+.style-section { padding:120px 2rem 80px 2rem; z-index:1; min-height:100vh; display:none; flex-direction:column; justify-content:flex-start; overflow:hidden; }
+.style-section.active { display:flex; }
+.section-title-container { display:inline-block; margin:0 auto 50px auto; text-align:center; opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; }
+.style-section h2 { font-size:2.8rem; color:#ffb75e; text-shadow:0 0 15px #ff7b3f,0 0 25px #ffb75e; margin:0; }
+
+/* PORTFOLIO GRID */
+.portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px; }
+.portfolio-item { position:relative; overflow:hidden; border-radius:14px; box-shadow:0 0 25px rgba(255,123,63,0.7); cursor:pointer; transition:all 0.4s ease; display:flex; justify-content:center; align-items:center; aspect-ratio:16/9; }
+.portfolio-item video, .portfolio-item img { width:100%; height:100%; border-radius:15px; transition:all 0.4s ease; }
+.portfolio-item:hover { transform:scale(1.05); box-shadow:0 0 50px rgba(255,183,94,1),0 0 70px rgba(255,123,63,0.9); }
+
+/* THUMBNAILS FULL-WIDTH */
+.thumbSliderContainer { width:100%; overflow:hidden; padding:50px 0; display:flex; flex-direction:column; gap:35px; }
+.thumbSlider { display:flex; gap:25px; }
+.thumbSlider .portfolio-item { flex: 0 0 25%; aspect-ratio:16/9; border-radius:15px; overflow:hidden; box-shadow:0 0 25px rgba(255,123,63,0.7); transition: transform 0.5s ease, opacity 0.5s ease; }
+.thumbSlider .portfolio-item img { width:100%; height:100%; object-fit:cover; display:block; border-radius:15px; }
+/* sliding animations */
+.row1 { animation:slideLeft 35s linear infinite; }
+.row2 { animation:slideRight 35s linear infinite; }
+/* cinematic effect */
+.thumbSlider .portfolio-item { transform: scale(0.92); opacity:0.88; }
+.thumbSlider .portfolio-item:nth-child(odd) { transform: scale(1); opacity:1; }
+@keyframes slideLeft { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+@keyframes slideRight { 0% { transform:translateX(-50%); } 100% { transform:translateX(0); } }
+
+/* VIEW REVIEWS BUTTON */
+.view-reviews-btn {
+  grid-column: span 2;
+  padding:24px 50px; font-size:1.7rem; font-family:'Montserrat',sans-serif; font-weight:700; border-radius:20px;
+  border:3px solid #ff7b3f; background:transparent; color:#ffb75e; cursor:pointer;
+  position:relative; overflow:hidden; transition:all 0.5s ease;
+}
+.view-reviews-btn::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,#ff7b3f,#ffb75e); transform:scaleX(1); transform-origin:right; transition:transform 0.5s ease; z-index:0; }
+.view-reviews-btn span { position:relative; z-index:1; transition:color 0.5s ease; }
+.view-reviews-btn:hover::before { transform:scaleX(0); }
+.view-reviews-btn:hover span { color:#0f0f0f; }
+
+/* CONTACT */
+.contact-section { padding:120px 2rem; text-align:center; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.contact-section h2 { font-size:2.8rem; color:#ffb75e; text-shadow:0 0 15px #ff7b3f,0 0 25px #ffb75e; margin-bottom:30px; z-index:4; }
+.contact-section p { font-size:1.8rem; color:#e5c8a8; margin-bottom:40px; z-index:3; }
+.contact-section button { padding:24px 50px; font-size:1.7rem; font-family:'Montserrat',sans-serif; font-weight:700; border-radius:20px; border:3px solid #ff7b3f; background:linear-gradient(90deg,#ff7b3f,#ffb75e); color:#0f0f0f; cursor:pointer; position:relative; overflow:hidden; transition:all 0.5s ease; }
+.contact-section button::before { content:""; position:absolute; inset:0; background:#0e0e0e; transform:scaleX(0); transform-origin:right; transition:transform 0.5s ease; z-index:0; }
+.contact-section button span { position:relative; z-index:1; transition:color 0.5s ease; }
+.contact-section button:hover::before { transform:scaleX(1); }
+.contact-section button:hover span { color:#ffb75e; }
+
+/* RESPONSIVE */
+@media (max-width:1200px){ .thumbSlider .portfolio-item { flex:0 0 33.33%; } }
+@media (max-width:900px){ .thumbSlider .portfolio-item { flex:0 0 50%; } }
+@media (max-width:600px){ .thumbSlider .portfolio-item { flex:0 0 100%; } }
+@media (max-width:768px) { .hero h1 { font-size:3rem; } .hero p { font-size:1.3rem; margin-bottom:40px; } .hero .style-buttons { grid-template-columns:1fr; gap:20px; } }
+</style>
+</head>
+<body>
+
+<!-- SPINNER -->
+<div id="spinner"><div></div></div>
+
+<!-- TOP BUTTONS -->
+<button class="back-btn" onclick="window.location.href='index.html'">Menu</button>
+<button class="work-btn" onclick="window.location.href='info.html'">Work With Me</button>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 id="hero-title">My Portfolio</h1>
+  <p id="hero-text">Showcasing cinematic edits, motion graphics, gaming montages, documentaries, advertisements, and Shorts/TikTok content.</p>
+  <div class="style-buttons">
+    <button onclick="showSection('motion')"><span>Motion Graphics</span></button>
+    <button onclick="showSection('gaming')"><span>Gaming</span></button>
+    <button onclick="showSection('documentary')"><span>Documentaries</span></button>
+    <button onclick="showSection('ads')"><span>Advertisements</span></button>
+    <button onclick="showSection('shorts')"><span>Shorts / TikTok</span></button>
+    <button onclick="showSection('thumbnails')"><span>Thumbnails</span></button>
+    <button class="view-reviews-btn" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'});"><span>View Reviews</span></button>
+  </div>
+</section>
+
+<!-- VIDEO SECTIONS -->
+<section class="style-section" id="motion">
+  <div class="section-title-container"><h2>Motion Graphics</h2></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item"><video src="videos/motion1.mp4" muted></video></div>
+    <div class="portfolio-item"><video src="videos/motion2.mp4" muted></video></div>
+  </div>
+</section>
+<section class="style-section" id="gaming">
+  <div class="section-title-container"><h2>Gaming Montages</h2></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item"><video src="videos/gaming1.mp4" muted></video></div>
+    <div class="portfolio-item"><video src="videos/gaming2.mp4" muted></video></div>
+  </div>
+</section>
+<section class="style-section" id="documentary">
+  <div class="section-title-container"><h2>Documentaries</h2></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item"><video src="videos/doc1.mp4" muted></video></div>
+    <div class="portfolio-item"><video src="videos/doc2.mp4" muted></video></div>
+  </div>
+</section>
+<section class="style-section" id="ads">
+  <div class="section-title-container"><h2>Advertisements</h2></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item"><video src="videos/ads1.mp4" muted></video></div>
+    <div class="portfolio-item"><video src="videos/ads2.mp4" muted></video></div>
+  </div>
+</section>
+<section class="style-section" id="shorts">
+  <div class="section-title-container"><h2>Shorts / TikTok</h2></div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item"><video src="videos/shorts1.mp4" muted></video></div>
+    <div class="portfolio-item"><video src="videos/shorts2.mp4" muted></video></div>
+  </div>
+</section>
+
+<!-- THUMBNAILS FULL-WIDTH -->
+<section class="style-section" id="thumbnails">
+  <div class="section-title-container"><h2>Thumbnails</h2></div>
+  <div class="thumbSliderContainer">
+    <div class="thumbSlider row1">
+      <div class="portfolio-item"><img src="images/thumbnails/1.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/2.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/3.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/4.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/5.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/6.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/7.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/8.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/1.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/2.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/3.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/4.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/5.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/6.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/7.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/8.jpg"></div>
+    </div>
+    <div class="thumbSlider row2">
+      <div class="portfolio-item"><img src="images/thumbnails/9.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/10.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/11.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/12.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/13.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/14.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/15.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/16.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/9.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/10.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/11.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/12.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/13.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/14.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/15.jpg"></div>
+      <div class="portfolio-item"><img src="images/thumbnails/16.jpg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / REVIEWS -->
+<section class="contact-section" id="reviews">
+  <h2>Check Reviews</h2>
+  <p>See what people are saying, read our reviews!</p>
+  <button onclick="window.location.href='reviews.html'"><span>Reviews</span></button>
+</section>
+
+<script>
+// SPINNER & INIT
+function initPage() {
+  const spinner = document.getElementById('spinner');
+  spinner.style.transition = 'opacity 0.6s ease';
+  spinner.style.opacity = '0';
+  setTimeout(() => { spinner.style.display = 'none'; }, 600);
+
+  const hero = document.querySelector('.hero');
+  hero.style.opacity = '1';
+  hero.style.transform = 'translateY(0)';
+  
+  const buttons = document.querySelectorAll('.hero .style-buttons, .back-btn, .work-btn');
+  buttons.forEach((b,i) => { 
+    setTimeout(()=>{ 
+      b.style.opacity = '1'; 
+      b.style.transform = 'translateY(0)'; 
+    }, i*150); 
+  });
+}
+window.addEventListener('load', initPage);
+setTimeout(initPage, 3000);
+
+// SHOW SECTION
+function showSection(id){
+  document.querySelectorAll('.style-section').forEach(sec => sec.classList.remove('active'));
+  document.querySelectorAll('video').forEach(v=>{ v.pause(); v.currentTime=0; v.muted=true; });
+  const target=document.getElementById(id);
+  target.classList.add('active');
+  const title=target.querySelector('.section-title-container');
+  title.style.opacity='0'; title.style.transform='translateY(20px)';
+  setTimeout(()=>{ title.style.transition='opacity 0.8s ease, transform 0.8s ease'; title.style.opacity='1'; title.style.transform='translateY(0)'; },100);
+  target.scrollIntoView({behavior:'smooth'});
+}
+
+// VIDEO TOGGLE
+let currentVideo=null;
+document.querySelectorAll('video').forEach(video=>{
+  video.addEventListener('click',()=>{
+    if(currentVideo && currentVideo!==video){ currentVideo.pause(); currentVideo.muted=true; }
+    if(video.paused){ video.play(); video.muted=false; currentVideo=video; } else { video.pause(); video.muted=true; currentVideo=null; }
+  });
+});
+</script>
+</body>
+</html>

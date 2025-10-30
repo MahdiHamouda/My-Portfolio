@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahdi Hamouda | Video Editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Poppins',sans-serif;color:white;overflow-x:hidden;position:relative;background:#0e0e0e;}
+
+/* BACKGROUND */
+body{background:url("images/bg.jpg") center/cover no-repeat;}
+body::before{content:"";position:fixed;inset:0;backdrop-filter: blur(12px);background: rgba(0,0,0,0.6);z-index:0;}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:#0e0e0e;display:flex;justify-content:center;align-items:center;z-index:9999;}
+.spinner{border:6px solid rgba(255,255,255,0.2);border-top:6px solid #ff7b3f;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;}
+@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+
+/* PAGE WRAPPER */
+.page-wrapper{opacity:0;transition:opacity 1s ease;}
+
+/* MAIN CONTAINER */
+.container{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;}
+
+/* PROFILE IMAGE */
+.profile-img{width:28vw;max-width:280px;height:28vw;max-height:280px;border-radius:50%;border:6px solid #ff7b3f;box-shadow:0 0 60px rgba(255,120,60,0.9);margin-bottom:2.5vh;object-fit:cover;opacity:0; transform: translateY(30px) scale(0.9); transition: all 0.8s ease;}
+.float { animation:float 3s ease-in-out infinite; }
+@keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+
+/* NAME & DESCRIPTION */
+h1{font-size:2.2vw;font-weight:800;text-shadow:0 0 20px #ff7b3f,0 0 45px #ffb75e;margin-bottom:1vh;opacity:0; transform: translateY(30px); transition: all 0.8s ease;}
+p{max-width:650px;font-size:0.9vw;font-weight:500;color:#e5c8a8;margin-bottom:3vh;line-height:1.5;text-shadow:0 0 8px rgba(255,255,255,0.1);opacity:0; transform: translateY(30px); transition: all 0.8s ease;}
+
+/* BUTTONS */
+.btn-container { display:flex; flex-wrap:wrap; gap:2vw; justify-content:center; margin-top:2.5vh; }
+.btn{padding:1.5vh 4vw;font-size:1.4vw;font-family:'Montserrat',sans-serif;font-weight:700;border-radius:20px;border:3px solid #ff7b3f;cursor:pointer;position:relative;overflow:hidden;transition:all 0.5s ease;opacity:0; transform: translateY(30px); }
+.btn span{position:relative; z-index:1; transition: color 0.5s ease;}
+
+/* FILLED BUTTON */
+.btn-filled{background: linear-gradient(90deg,#ff7b3f,#ffb75e);color:#0f0f0f;}
+.btn-filled::before{content:"";position:absolute;inset:0;background:#0e0e0e;transform:scaleX(0);transform-origin:right;transition:transform 0.5s ease;z-index:0;}
+.btn-filled:hover::before{transform:scaleX(1);}
+.btn-filled:hover span{color:#ffb75e;}
+
+/* OUTLINED BUTTON */
+.btn-outlined{background:transparent;color:#ff7b3f;}
+.btn-outlined::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ff7b3f,#ffb75e);transform:scaleX(0);transform-origin:right;transition:transform 0.5s ease;z-index:0;}
+.btn-outlined:hover::before{transform:scaleX(1);}
+.btn-outlined:hover span{color:#0f0f0f;}
+
+/* RESPONSIVE */
+@media (max-width:768px){.profile-img{width:40vw;height:40vw;} h1{font-size:6vw;} p{font-size:3vw;margin-bottom:4vw;} .btn{font-size:4vw;padding:3vw 12vw;width:80%;} .btn-container{gap:4vw;}}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="page-wrapper" style="display:none;">
+  <div class="container">
+    <img class="profile-img" src="images/profile.jpg" alt="Mahdi Hamouda">
+    <h1>Mahdi Hamouda</h1>
+    <p>Professional Video Editor crafting cinematic, engaging, and high-quality visuals across multiple styles — from motion graphics and documentaries to gaming and talking-head content.</p>
+
+    <!-- FIRST LINE -->
+    <div class="btn-container">
+      <button class="btn btn-outlined" onclick="location.href='reviews.html'"><span>Reviews</span></button>
+      <button class="btn btn-outlined" onclick="location.href='about.html'"><span>About</span></button>
+      <button class="btn btn-outlined" onclick="location.href='contact.html'"><span>Contact</span></button>
+    </div>
+
+    <!-- SECOND LINE -->
+    <div class="btn-container" style="margin-top:2vh;">
+      <div style="flex:1"></div>
+      <button class="btn btn-filled" onclick="location.href='portfolio.html'"><span>My Work</span></button>
+      <button class="btn btn-filled" onclick="location.href='info.html'"><span>Work With Me</span></button>
+      <div style="flex:1"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', () => {
+  // Page ready, hide loader immediately
+  const loader = document.getElementById('loader');
+  const wrapper = document.querySelector('.page-wrapper');
+
+  loader.style.transition='opacity 0.5s ease';
+  loader.style.opacity='0';
+  setTimeout(()=>{
+    loader.style.display='none';
+    wrapper.style.display='block';
+    setTimeout(()=> wrapper.style.opacity='1',50);
+
+    // Animate content
+    const profile = document.querySelector('.profile-img');
+    const title = document.querySelector('h1');
+    const desc = document.querySelector('p');
+    const buttons = document.querySelectorAll('.btn');
+
+    profile.classList.add('float');
+    setTimeout(()=>{ profile.style.opacity='1'; profile.style.transform='translateY(0) scale(1)'; },100);
+    setTimeout(()=>{ title.style.opacity='1'; title.style.transform='translateY(0)'; },300);
+    setTimeout(()=>{ desc.style.opacity='1'; desc.style.transform='translateY(0)'; },500);
+    buttons.forEach((btn,i)=>{
+      setTimeout(()=>{ btn.style.opacity='1'; btn.style.transform='translateY(0)'; },700 + i*100);
+    });
+
+  },500);
+});
+</script>
+</body>
+</html>

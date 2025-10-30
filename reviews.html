@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Editing Reviews | Mahdi Hamouda</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; height:100%; font-family:'Poppins',sans-serif; color:white; background:#0e0e0e; overflow:hidden; }
+
+/* BACKGROUND */
+body::before {
+  content:""; position:fixed; inset:0;
+  background:url('images/bg.jpg') no-repeat center/cover;
+  filter:blur(18px) brightness(40%);
+  z-index:0;
+}
+
+/* SPINNER OVERLAY */
+#loader {
+  position:fixed; inset:0; z-index:99999;
+  display:flex; justify-content:center; align-items:center;
+  background:#0e0e0e;
+  transition:opacity 1s ease, visibility 1s ease;
+}
+.spinner {
+  width:80px; height:80px;
+  border:8px solid rgba(255,255,255,0.1);
+  border-top:8px solid #ff7b3f;
+  border-radius:50%;
+  animation:spin 1.2s linear infinite;
+  box-shadow:0 0 30px #ff7b3f, 0 0 60px #ffb75e;
+}
+@keyframes spin {
+  to { transform:rotate(360deg); }
+}
+
+/* PAGE CONTENT (HIDDEN INITIALLY) */
+#page-content {
+  opacity:0; visibility:hidden; transition:opacity 1.2s ease 0.3s;
+}
+
+/* TOP BUTTONS */
+.back-btn, .work-btn {
+  position:fixed; top:40px; z-index:9999;
+  padding:16px 28px; font-size:1.4rem; font-weight:700;
+  border:3px solid #ff7b3f; color:#ffb75e; background:transparent; border-radius:18px;
+  cursor:pointer; box-shadow:0 0 25px rgba(255,123,63,0.7);
+  transition:all 0.6s ease;
+}
+.back-btn{ left:40px; }
+.work-btn{ right:40px; }
+.back-btn:hover, .work-btn:hover {
+  transform:scale(1.2);
+  background:linear-gradient(90deg,#ff7b3f,#ffb75e);
+  color:#0f0f0f;
+  box-shadow:0 0 55px rgba(255,183,94,1),0 0 80px rgba(255,123,63,1);
+}
+
+/* HERO SECTION */
+.hero {
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  width:100%; height:100vh; text-align:center; padding:2rem;
+}
+.hero h1 {
+  font-size:4rem; font-weight:700;
+  text-shadow:0 0 30px #ff7b3f,0 0 60px #ffb75e;
+  margin-bottom:20px; opacity:0; transform:translateY(30px);
+  transition:opacity 1s ease, transform 1s ease;
+}
+.hero p {
+  font-size:1.8rem; color:#e5c8a8; line-height:2; max-width:100%;
+  margin-bottom:40px; opacity:0; transform:translateY(30px);
+  transition:opacity 1s ease 0.5s, transform 1s ease 0.5s;
+}
+
+/* REVIEWS SECTION */
+#reviews-section {
+  position:relative; width:100%; height:50%; overflow:hidden;
+  opacity:0; transform:translateY(40px);
+  transition:opacity 1s ease 1s, transform 1s ease 1s;
+}
+.review-row { display:flex; gap:15px; position:absolute; white-space:nowrap; width:200%; }
+.review-row.left { top:5%; }
+.review-row.middle { top:calc(50% - 45px); }
+.review-row.right { bottom:5%; }
+
+.review-item {
+  display:flex; gap:10px; background:rgba(30,30,42,0.65);
+  border-radius:15px; padding:10px 15px; min-width:280px;
+  align-items:flex-start; flex-shrink:0;
+  box-shadow:0 0 20px rgba(255,123,63,0.3);
+}
+.review-avatar { width:50px; height:50px; border-radius:50%; overflow:hidden; flex-shrink:0; }
+.review-avatar img { width:100%; height:100%; object-fit:cover; }
+.review-content { display:flex; flex-direction:column; gap:4px; }
+.review-username { font-weight:700; color:#ffb75e; font-size:1.2rem; text-shadow:0 0 6px #ff7b3f; }
+.review-text { font-size:1rem; color:#e5c8a8; line-height:1.5; white-space:pre-wrap; }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .review-item { min-width:220px; }
+  .review-avatar { width:40px; height:40px; }
+  .review-text { font-size:0.9rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader"><div class="spinner"></div></div>
+
+<!-- PAGE CONTENT -->
+<div id="page-content">
+  <!-- TOP BUTTONS -->
+  <button class="back-btn" onclick="window.location.href='index.html'">Menu</button>
+  <button class="work-btn" onclick="window.location.href='info.html'">Work With Me</button>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1 id="hero-title">Impressed Clients!</h1>
+    <p id="hero-text">See what clients are saying about my video editing work</p>
+
+<!-- REVIEWS -->
+<div id="reviews-section">
+  <!-- TOP ROW -->
+  <div class="review-row left" id="left-row">
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/1.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Alex</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> I didn’t know work like this even existed. Completely blown away!</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/2.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Maya</div>
+        <div class="review-text">Super professional and fast.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/3.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Jordan</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> Wow… just wow.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/4.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Lara</div>
+        <div class="review-text">Honestly, I’m impressed.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/5.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Sam</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> high-end work! I’ll definitely be coming back for more 😎</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIDDLE ROW -->
+  <div class="review-row middle" id="middle-row">
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/6.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Emma</div>
+        <div class="review-text">Can’t recommend enough. He makes theprocess 10x easier</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/7.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Ryan</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> I wasn’t sure at first, but now I’m completely hooked. Incredible!</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/8.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Olivia</div>
+        <div class="review-text">Highly recommended</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/9.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Chris</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> Very smooth process and the final product is flawless.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/10.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Sophia</div>
+        <div class="review-text">You know you’re in good hands when Mahdi handles your edits. Highly recommended.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="review-row right" id="right-row">
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/11.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Ethan</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span>Awesome experience with Mahdi!</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/12.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Grace</div>
+        <div class="review-text">Everything was handled, no complaints. He delivered exactly what I wanted.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/13.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Noah</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> Can’t wait to work together again!</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/14.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Chloe</div>
+        <div class="review-text">If you’re thinking about it, just do it. Mahdi made the process super easy and professional.</div>
+      </div>
+    </div>
+    <div class="review-item">
+      <div class="review-avatar"><img src="images/profiles/15.jpg"></div>
+      <div class="review-content">
+        <div class="review-username">Liam</div>
+        <div class="review-text"><span style="color:#4DA6FF">@mahdi</span> Beyond expectations! This kind of quality is rare. Absolutely phenomenal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  const page = document.getElementById('page-content');
+  const heroTitle = document.getElementById('hero-title');
+  const heroText = document.getElementById('hero-text');
+  const reviews = document.getElementById('reviews-section');
+
+  // Wait a moment to simulate cinematic reveal
+  setTimeout(() => {
+    loader.style.opacity = '0';
+    loader.style.visibility = 'hidden';
+    page.style.visibility = 'visible';
+    page.style.opacity = '1';
+  }, 1500);
+
+  // Animate hero and reviews
+  setTimeout(() => {
+    heroTitle.style.opacity = '1';
+    heroTitle.style.transform = 'translateY(0)';
+  }, 2000);
+
+  setTimeout(() => {
+    heroText.style.opacity = '1';
+    heroText.style.transform = 'translateY(0)';
+  }, 2300);
+
+  setTimeout(() => {
+    reviews.style.opacity = '1';
+    reviews.style.transform = 'translateY(0)';
+  }, 2600);
+
+  // Duplicate reviews for infinite loop
+  const rows = ['left-row','middle-row','right-row'];
+  rows.forEach(id => {
+    const row = document.getElementById(id);
+    row.innerHTML += row.innerHTML;
+  });
+
+  let leftPos = 0, middlePos = 0, rightPos = 0;
+  const speed = 0.2;
+
+  function animate() {
+    leftPos -= speed;
+    middlePos += speed * 0.8;
+    rightPos -= speed * 1.1;
+
+    const leftRow = document.getElementById('left-row');
+    const middleRow = document.getElementById('middle-row');
+    const rightRow = document.getElementById('right-row');
+
+    if (leftPos <= -leftRow.scrollWidth / 2) leftPos = 0;
+    if (middlePos >= 0) middlePos = -middleRow.scrollWidth / 2;
+    if (rightPos <= -rightRow.scrollWidth / 2) rightPos = 0;
+
+    leftRow.style.transform = `translateX(${leftPos}px)`;
+    middleRow.style.transform = `translateX(${middlePos}px)`;
+    rightRow.style.transform = `translateX(${rightPos}px)`;
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+});
+</script>
+
+</body>
+</html>
